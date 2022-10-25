@@ -74,9 +74,9 @@ class SolarTracer:
 	    return 0
 
 	# read informational register
-	def readReg(self,register):
+	def readReg(self,register, signed=False):
 	    try:
-	            reading = self.instrument.read_register(register, 2, 4)
+	            reading = self.instrument.read_register(register, 2, 4, signed = signed)
 	            return reading
 	    except IOError:
 	            return -2
@@ -97,7 +97,7 @@ class SolarTracer:
 	    except IOError as err:
 	    		return -2
 	    except ValueError:
-    			print "Could not convert data!"
+    			print("Could not convert data!")
     			return -3
 
 

@@ -8,7 +8,7 @@ from SolarTracer import *
 
 # influx configuration - edit these
 ifuser = "grafana"
-ifpass = "solar"
+ifpass = "password"
 ifdb   = "solar"
 ifhost = "127.0.0.1"
 ifport = 8086
@@ -17,7 +17,7 @@ measurement_name = "solar"
 
 up = SolarTracer()
 if (up.connect() < 0):
-	print "Could not connect to the device"
+	print("Could not connect to the device")
 	exit -2
 
 # get timestamps
@@ -37,24 +37,25 @@ body_solar = [
         "measurement": measurement_name,
         "time": timestamp,
         "fields": {
-            "PVvolt": up.readReg(PVvolt),
-            "PVamps": up.readReg(PVamps),
-            "PVwatt": PVwatt,
-            "PVkwh": up.readReg(PVkwhTotal),
-            "PVkwh2d": up.readReg(PVkwhToday),
-            "BAvolt": up.readReg(BAvolt),
-            "BAamps": up.readReg(BAamps),
-            "BAperc": up.readReg(BAperc),
-            "DCvolt": up.readReg(DCvolt),
-            "DCamps": up.readReg(DCamps),
-            "DCwatt": DCwatt,
-            "DCkwh": up.readReg(DCkwhTotal),
-            "DCkwh2d": up.readReg(DCkwhToday),
+            "PVvolt": float(up.readReg(PVvolt)),
+            "PVamps": float(up.readReg(PVamps)),
+            "PVwatt": float(PVwatt),
+            "PVkwh": float(up.readReg(PVkwhTotal)),
+            "PVkwh2d": float(up.readReg(PVkwhToday)),
+            "BAvolt": float(up.readReg(BAvolt)),
+            "BAamps": float(up.readReg(BAamps)),
+            "BAperc": float(up.readReg(BAperc)),
+            "DCvolt": float(up.readReg(DCvolt)),
+            "DCamps": float(up.readReg(DCamps)),
+            "DCwatt": float(DCwatt),
+            "DCkwh": float(up.readReg(DCkwhTotal)),
+            "DCkwh2d": float(up.readReg(DCkwhToday)),
+            "BAtemp": float(up.readReg(BAtemp, signed=True))
         }
     }
 ]
 
-print body_solar
+print(body_solar)
 
 # connect to influx
 ifclient = InfluxDBClient(ifhost,ifport,ifuser,ifpass,ifdb)
