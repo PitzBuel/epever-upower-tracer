@@ -8,7 +8,7 @@ from SolarTracer import *
 
 # influx configuration - edit these
 ifuser = "grafana"
-ifpass = "solar"
+ifpass = "password"
 ifdb   = "solar"
 ifhost = "127.0.0.1"
 ifport = 8086
@@ -50,7 +50,7 @@ body_solar = [
             "DCwatt": float(DCwatt),
             "DCkwh": float(up.readReg(DCkwhTotal)),
             "DCkwh2d": float(up.readReg(DCkwhToday)),
-            "BAtemp": float(up.readReg(BAtemp))
+            "BAtemp": float(up.readReg(BAtemp, signed=True))
         }
     }
 ]
